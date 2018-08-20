@@ -16,6 +16,20 @@ pipeline{
 				sh 'mvn -B -DskipTests clean package'
 
 			}
+
+			post {
+
+				success {
+
+					echo 'Build foi um sucesso!!!'
+
+					mail to: 'pedro-g-almeida@alticelabs.com',
+						subject: "!!Build do simple java maven app!! ${currentBuild.fullDisplayName}",
+						body: "Que bomba este jenkins! ${env.BUILD_URL}"
+
+				}
+
+			}
 		}
 
 		stage('Test') {
@@ -39,7 +53,7 @@ pipeline{
 
 				sh './jenkins/scripts/deliver.sh'
 			}
-			
+
 		}
 
 	}
